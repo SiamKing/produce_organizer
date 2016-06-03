@@ -1,0 +1,31 @@
+<h1>Welcome, <%=@user.username%></h1>
+
+<%if @user.produce != []%>
+<h3>Here's what you have in your fridge</h3>
+<table >
+  <tr>
+    <th>Item</th>
+    <th>Expires in</th>
+    <th>          </th>
+  </tr>
+  <%@user.produce.each do |produce| %>
+  <tr>
+    <td><%= produce.name %></td>
+    <%if produce.expires_in > 0%>
+    <td><%=produce.expires_in%> days</td>
+    <% elsif produce.expires_in == 0%>
+    <td>Expires Today</td>
+    <%else%>
+    <td>Expired!</td>
+    <% end %>
+    <td><form action="/produce/<%=produce.id%>/delete" method="post">
+      <input type="hidden" name="_method" value="delete">
+      <input type="submit" value="Remove from list">
+
+    </form></td>
+    <% end %>
+  </tr>
+</table>
+<% end %>
+
+ <a href="/produce/new">Click here to add more items</a>

@@ -1,0 +1,12 @@
+<form action="/produce/new" method="post">
+  <label><h3>Choose from available items</h3></label>
+
+  <%ProduceDatabase.all.each do |produce|%>
+  <label><%=produce.name%></label>
+  <input type="checkbox" name="produce[name][]" value="<%=produce.name%>" id="produce_name"><br>
+  <%end%>
+
+  <input type="text" name="name" value="">
+
+  <input type="submit" value="Submit">
+</form>
