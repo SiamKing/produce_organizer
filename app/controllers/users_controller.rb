@@ -1,4 +1,7 @@
+require 'rack-flash'
+
 class UsersController < ApplicationController
+  use Rack::Flash
 
   get '/users/signup' do
     if session[:user_id]
@@ -32,7 +35,8 @@ class UsersController < ApplicationController
       session[:user_id] = user.id
       redirect'/users/user'
     else
-      redirect '/users/login' # message: looks like your info didn't match up. please try again
+      flash[:notice] = "Looks like your info didn't match up. If you don't have an account, please signup. Otherwise, try loggin in again."
+      redirect '/' # message: looks like your info didn't match up. please try again
     end
   end
 
