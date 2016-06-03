@@ -4,6 +4,7 @@ class CreateProduce < ActiveRecord::Migration
       t.string :name
       t.integer :shelf_life
       t.datetime :created_at
+      
     end
   end
 end
