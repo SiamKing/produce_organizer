@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   get '/users/signup' do
-    if current_user
+    if session[:user_id]
       redirect '/users/user'
     else
       erb :'/users/signup'
@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     else
       user = User.create(params)
       session[:user_id] = user.id
-      redirect to '/users/user'
+      redirect to '/users/user' # flash message: You have successfully created an account
     end
   end
 
@@ -28,28 +28,27 @@ class UsersController < ApplicationController
 
   post '/users/login' do
     user = User.find_by(username: params[:username])
-    binding.pry
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
       redirect'/users/user'
     else
-      redirect '/users/login'
+      redirect '/users/login' # message: looks like your info didn't match up. please try again
     end
   end
 
   get '/users/user' do
-    if current_user
+    if session[:user_id]
       @user = current_user
       erb :'/users/user'
     else
-      redirect '/users/login'
+      redirect '/users/login' #message :please login
     end
   end
 
   get '/users/logout' do
     if current_user
       session.clear
-      redirect '/users/login'
+      redirect '/users/login' # message : logout succesful see you soon
     else
       redirect '/'
     end

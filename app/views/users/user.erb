@@ -14,7 +14,7 @@
     <%if produce.expires_in > 0%>
     <td><%=produce.expires_in%> days</td>
     <% elsif produce.expires_in == 0%>
-    <td>Expires Today</td>
+    <td>Expires Today!</td>
     <%else%>
     <td>Expired!</td>
     <% end %>
@@ -30,6 +30,7 @@
 <% else %>
 <h3>Looks like your fridge is empty</h3>
 <% end %>
+<br>
 <a href="/produce/new">Click here to add more items</a>
 <br></br>
 <a href="/users/logout">Click here to logout</a>
