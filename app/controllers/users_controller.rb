@@ -37,4 +37,13 @@ class UsersController < ApplicationController
     erb :'/users/user'
   end
 
+  get '/users/logout' do
+    if logged_in?
+      session.clear
+      redirect '/users/login'
+    else
+      redirect '/'
+    end
+  end
+
 end
