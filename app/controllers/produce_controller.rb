@@ -1,9 +1,12 @@
+require 'rack-flash'
+
 class ProduceController < ApplicationController
 
   get '/produce/new' do
     if current_user
       erb :'/produce/new'
     else
+      flash[:notice] = "Please Log In"
       redirect '/users/login'
     end
   end
@@ -18,18 +21,22 @@ class ProduceController < ApplicationController
   post '/produce/new' do
     if produce = ProduceDatabase.find_by(name: params[:name])
       current_user.produce << Produce.create(name: produce.name, shelf_life: produce.shelf_life)
-      redirect '/users/user' # log message - successfully created
+      flash[:notice] = "Your item added to your list"
+      redirect '/users/user'
     else
       if current_user
         if params[:name] != "" && params[:shelf_life].to_i.class == Fixnum
           produce = ProduceDatabase.create(name: params[:name], shelf_life: params[:shelf_life])
           current_user.produce << Produce.create(name: produce.name, shelf_life: produce.shelf_life)
-          redirect '/users/user' #log message = successfully created
+          flash[:notice] = "Your item was successfully created and added to your fridge"
+          redirect '/users/user'
         else
-          redirect '/produce/new' # log message - please fill out form correctly
+          flash[:notice] = "The form was not filled out correctly. Please try again."
+          redirect '/produce/new'
         end
       else
-        redirect '/users/login' # flash message - please login
+        flash[:notice] = "Please Log In"
+        redirect '/users/login' 
       end
     end
 

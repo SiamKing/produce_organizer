@@ -17,7 +17,8 @@ class UsersController < ApplicationController
     else
       user = User.create(params)
       session[:user_id] = user.id
-      redirect to '/users/user' # flash message: You have successfully created an account
+      flash[:notice] = "Congratulations! You have successfully created an account!"
+      redirect to '/users/user' 
     end
   end
 
@@ -36,7 +37,7 @@ class UsersController < ApplicationController
       redirect'/users/user'
     else
       flash[:notice] = "Looks like your info didn't match up. If you don't have an account, please signup. Otherwise, try loggin in again."
-      redirect '/' # message: looks like your info didn't match up. please try again
+      redirect '/'
     end
   end
 
@@ -45,14 +46,16 @@ class UsersController < ApplicationController
       @user = current_user
       erb :'/users/user'
     else
-      redirect '/users/login' #message :please login
+      flash[:notice] = "Please login"
+      redirect '/users/login'
     end
   end
 
   get '/users/logout' do
     if current_user
-      session.clear
-      redirect '/users/login' # message : logout succesful see you soon
+      session.destroy
+      flash[:notice] = "Log out succesful. Hope to see you back soon!"
+      redirect '/users/login'
     else
       redirect '/'
     end
