@@ -7,7 +7,7 @@ end
 
 use Rack::MethodOverride
 
-
+use ProduceDatabaseController
 use UsersController
 use ProduceController
 run ApplicationController

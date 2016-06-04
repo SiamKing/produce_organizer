@@ -15,18 +15,19 @@ class ProduceController < ApplicationController
     params[:produce][:name].each do |produce|
       current_user.produce << Produce.create(name: ProduceDatabase.find_by(name: produce).name, shelf_life: ProduceDatabase.find_by(name: produce).shelf_life)
     end
+    flash[:notice] = "You successfully added items to your fridge!"
     redirect '/users/user'
   end
 
   post '/produce/new' do
     if produce = ProduceDatabase.find_by(name: params[:name])
       current_user.produce << Produce.create(name: produce.name, shelf_life: produce.shelf_life)
-      flash[:notice] = "Your item added to your list"
+      flash[:notice] = "Your item was successfully added to your list"
       redirect '/users/user'
     else
-      if current_user
+       if current_user
         if params[:name] != "" && params[:shelf_life].to_i.class == Fixnum
-          produce = ProduceDatabase.create(name: params[:name], shelf_life: params[:shelf_life])
+          produce = ProduceDatabase.create(name: params[:name].capitalize, shelf_life: params[:shelf_life])
           current_user.produce << Produce.create(name: produce.name, shelf_life: produce.shelf_life)
           flash[:notice] = "Your item was successfully created and added to your fridge"
           redirect '/users/user'
@@ -36,18 +37,21 @@ class ProduceController < ApplicationController
         end
       else
         flash[:notice] = "Please Log In"
-        redirect '/users/login' 
+        redirect '/users/login'
       end
     end
 
   end
 
   delete '/produce/:id/delete' do
-    @produce = Produce.find(params[:id])
+    produce = Produce.find(params[:id])
     if current_user.produce.include?(produce)
       produce.delete
+      flash[:notice] = "Item was removed from your fridge"
+      redirect '/users/user'
     end
-    redirect '/users/user' # flash message - @produce removed
+    flash[:notice] = "That item was not yours to remove!"
+    redirect '/users/user'
   end
 
 end
