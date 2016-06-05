@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
 
   has_many :produce
+  has_many :produce_database
 
   has_secure_password
 
@@ -9,7 +10,7 @@ class User < ActiveRecord::Base
       username.downcase.gsub(" ", "-")
     end
   end
-  
+
 
   module ClassMethods
     def find_by_slug(slug)
