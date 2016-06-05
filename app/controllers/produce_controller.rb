@@ -3,7 +3,7 @@ require 'rack-flash'
 class ProduceController < ApplicationController
 
   use Rack::Flash
-  
+
   get '/produce/new' do
     if current_user
       erb :'/produce/new'
@@ -28,8 +28,8 @@ class ProduceController < ApplicationController
       redirect '/users/user'
     else
        if current_user
-        if params[:name] != "" && params[:shelf_life].to_i.class == Fixnum
-          produce = ProduceDatabase.create(name: params[:name].capitalize, shelf_life: params[:shelf_life])
+        if params[:name] != "" && params[:shelf_life].to_i > 0
+          produce = ProduceDatabase.create(name: params[:name].capitalize, shelf_life: params[:shelf_life], user_id: current_user.id)
           current_user.produce << Produce.create(name: produce.name, shelf_life: produce.shelf_life)
           flash[:notice] = "Your item was successfully created and added to your fridge"
           redirect '/users/user'
