@@ -2,6 +2,8 @@ require 'rack-flash'
 
 class ProduceController < ApplicationController
 
+  use Rack::Flash
+  
   get '/produce/new' do
     if current_user
       erb :'/produce/new'

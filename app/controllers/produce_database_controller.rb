@@ -2,32 +2,34 @@ require 'rack-flash'
 
 class ProduceDatabaseController < ApplicationController
 
+  use Rack::Flash
 
   get '/produce_database/edit' do
     erb :'/produce_database/edit'
   end
 
   patch '/produce_database/:id' do
-    #binding.pry
+    produce = ProduceDatabase.find(params[:id])
     if params[:name] != "" && params[:shelf_life] != ""
-      produce = ProduceDatabase.find(params[:id])
       produce.name = params[:name]
       produce.shelf_life = params[:shelf_life]
-      produce.update
+      produce.save
     elsif params[:name] != ""
-      produce = ProduceDatabase.find(params[:id])
       produce.name = params[:name]
-      produce.update
-    elsif params[:shelf_life] != ""
-      produce = ProduceDatabase.find(params[:id])
+      produce.save
+    elsif params[:shelf_life] != "" && params[:shelf_life].to_i.class == Fixnum
       produce.shelf_life = params[:shelf_life]
-      produce.update
+      produce.save
     else
+      flash[:notice] = "Nothing was changed. Please Edit Below"
       redirect '/produce_database/edit'
     end
     flash[:notice] = "You successfully changed the item"
-    redirect '/users/user'
+    redirect '/produce_database/edit'
   end
 
+  get '/produce_database/new' do
+    erb :'/produce_database/new'
+  end
 
 end

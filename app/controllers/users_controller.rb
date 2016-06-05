@@ -1,7 +1,8 @@
-# require 'rack-flash'
+require 'rack-flash'
 
 class UsersController < ApplicationController
-  #
+
+    use Rack::Flash
 
   get '/users/signup' do
     if session[:user_id]
