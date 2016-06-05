@@ -1,0 +1,8 @@
+<% ProduceDatabase.all.each do |produce| %>
+<form action="/produce_datbase/<%= produce.id %>" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <input type="text" name="name" placeholder="<%= produce.name %>">
+  <input type="text" name="shelf_life" placeholder="<%= produce.shelf_life %> Days">
+  <input type="submit" value="Edit <%= produce.name %>"><br>
+</form>
+<% end %>
