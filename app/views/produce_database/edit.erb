@@ -1,8 +1,18 @@
-<% ProduceDatabase.all.each do |produce| %>
-<form action="/produce_datbase/<%= produce.id %>" method="post">
-  <input type="hidden" name="_method" value="patch">
-  <input type="text" name="name" placeholder="<%= produce.name %>">
-  <input type="text" name="shelf_life" placeholder="<%= produce.shelf_life %> Days">
-  <input type="submit" value="Edit <%= produce.name %>"><br>
-</form>
+<table>
+  <tr>
+    <th> Item     </th>
+    <th> Shelf Life  </th>
+    <th>              </th>
+  </tr>
+  <% ProduceDatabase.order(:name).all.each do |produce| %>
+
+  <tr>
+    <form action="/produce_database/<%= produce.id %>" method="post">
+      <input type="hidden" name="_method" value="patch">
+      <td><input type="text" name="name" placeholder="<%= produce.name %>"></td>
+      <td><input type="text" name="shelf_life" placeholder="<%= produce.shelf_life %> Days"></td>
+      <td><input type="submit" value="Edit <%= produce.name %>"></td><br>
+    </form>
+  </tr>
+</table>
 <% end %>
