@@ -43,16 +43,16 @@ class ProduceDatabaseController < ApplicationController
       flash[:notice] = "Please fill out both fields to add item to database"
       redirect '/produce_database/new'
     else
-      if produce = ProduceDatabase.find_by(name: params[:name])
+      if produce = ProduceDatabase.find_by(name: params[:name].capitalize)
         flash[:notice] = "Item already exists. "
         redirect '/produce_database/new'
       else
-        ProduceDatabase.create(name: params[:name], shelf_life: params[:shelf_life], user_id: current_user.id)
+        ProduceDatabase.create(name: params[:name].capitalize, shelf_life: params[:shelf_life], user_id: current_user.id)
         flash[:notice] = "Item was successfully added"
         redirect '/produce_database/new'
       end
     end
-    
+
   end
 
 end

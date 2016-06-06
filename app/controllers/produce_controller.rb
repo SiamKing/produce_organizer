@@ -14,9 +14,7 @@ class ProduceController < ApplicationController
   end
 
   post '/produce' do
-    params[:produce][:name].each do |produce|
-      current_user.produce << Produce.create(name: ProduceDatabase.find_by(name: produce).name, shelf_life: ProduceDatabase.find_by(name: produce).shelf_life)
-    end
+    add_produce_to_list
     flash[:notice] = "You successfully added items to your fridge!"
     redirect '/users/user'
   end
@@ -55,5 +53,6 @@ class ProduceController < ApplicationController
     flash[:notice] = "That item was not yours to remove!"
     redirect '/users/user'
   end
+  
 
 end

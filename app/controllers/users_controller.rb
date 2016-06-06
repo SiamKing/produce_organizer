@@ -13,8 +13,9 @@ class UsersController < ApplicationController
   end
 
   post '/users/signup' do
-    if params[:username] == "" || params[:email] == "" || params[:password] == ""
-      redirect '/users/signup', locals: {message: "Please fill out all of the fields"}
+    if signup_blank
+      flash[:notice] = "Please fill out all of the fields"
+      redirect '/users/signup'
     else
       user = User.create(params)
       session[:user_id] = user.id
@@ -55,7 +56,7 @@ class UsersController < ApplicationController
   get '/users/logout' do
     if current_user
       session.destroy
-      flash[:notice] = "Log out succesful. Hope to see you back soon!"
+      flash[:notice] = "Log out successful. Hope to see you back soon!"
       redirect '/users/login'
     else
       redirect '/'

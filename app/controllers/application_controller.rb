@@ -24,6 +24,16 @@ class ApplicationController < Sinatra::Base
       User.find(session[:user_id])
     end
 
+    def add_produce_to_list
+      params[:produce][:name].each do |produce|
+        current_user.produce << Produce.create(name: ProduceDatabase.find_by(name: produce).name, shelf_life: ProduceDatabase.find_by(name: produce).shelf_life)
+      end
+    end
+
+    def signup_blank
+      params[:username] == "" || params[:email] == "" || params[:password] == ""
+    end
+
   end
 
 end
