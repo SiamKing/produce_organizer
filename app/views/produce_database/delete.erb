@@ -5,7 +5,7 @@
   </tr>
   <% ProduceDatabase.order(:name).all.each do |produce| %>
 
-  <form action="produce_database/<%= produce.id %>/delete" method="post">
+  <form action="/produce_database/<%= produce.id %>/delete" method="post">
     <tr>
       <input type="hidden" name="_method" value="delete">
       <td width="150"><%= produce.name %> </td>

@@ -23,7 +23,7 @@ class ProduceDatabaseController < ApplicationController
       elsif params[:name] != ""
         produce.name = params[:name]
         produce.save
-      elsif params[:shelf_life] != "" && params[:shelf_life].to_i.class == Fixnum
+      elsif params[:shelf_life] != "" && params[:shelf_life]
         produce.shelf_life = params[:shelf_life]
         produce.save
       else
@@ -67,6 +67,17 @@ class ProduceDatabaseController < ApplicationController
       flash[:notice] = "You do not have permission to see that page"
       redirect '/users/user'
     end
+  end
+
+  delete '/produce_database/:id/delete' do
+    if current_user.id == 6
+      produce = ProduceDatabase.find(params[:id])
+      produce.delete
+      flash[:notice] = "You successfully deleted item from the database"
+    else
+      flash[:notice] = "You do not have permission to delete item from database"
+    end
+    redirect '/users/user'
   end
 
 end
