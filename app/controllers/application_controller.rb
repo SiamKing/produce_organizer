@@ -38,6 +38,10 @@ class ApplicationController < Sinatra::Base
       params[:username] == "" || params[:email] == "" || params[:password] == ""
     end
 
+    def produce_id
+      ProduceDatabase.find(params[:id])
+    end
+
   end
 
 end

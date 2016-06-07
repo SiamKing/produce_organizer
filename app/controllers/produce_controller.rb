@@ -14,7 +14,7 @@ class ProduceController < ApplicationController
   end
 
   post '/produce' do
-    add_produce_to_list
+    add_produce_to_list #helper method
     flash[:notice] = "You successfully added items to your fridge!"
     redirect '/users/user'
   end
@@ -53,6 +53,6 @@ class ProduceController < ApplicationController
     flash[:notice] = "That item was not yours to remove!"
     redirect '/users/user'
   end
-  
+
 
 end

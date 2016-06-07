@@ -14,7 +14,7 @@ class ProduceDatabaseController < ApplicationController
   end
 
   patch '/produce_database/:id' do
-    produce = ProduceDatabase.find(params[:id])
+    produce = produce_id #helper method
     if current_user.id == produce.user_id
       if params[:name] != "" && params[:shelf_life] != ""
         produce.name = params[:name]
@@ -43,21 +43,17 @@ class ProduceDatabaseController < ApplicationController
   end
 
   post '/produce_database/new' do
-
     if params[:name] == "" || params[:shelf_life] == ""
       flash[:notice] = "Please fill out both fields to add item to database"
-      redirect '/produce_database/new'
     else
       if produce = ProduceDatabase.find_by(name: params[:name].capitalize)
         flash[:notice] = "Item already exists. "
-        redirect '/produce_database/new'
       else
         ProduceDatabase.create(name: params[:name].capitalize, shelf_life: params[:shelf_life], user_id: current_user.id)
         flash[:notice] = "Item was successfully added"
-        redirect '/produce_database/new'
       end
+      redirect '/produce_database/new'
     end
-
   end
 
   get '/produce_database/delete' do
@@ -71,8 +67,7 @@ class ProduceDatabaseController < ApplicationController
 
   delete '/produce_database/:id/delete' do
     if current_user.id == 6
-      produce = ProduceDatabase.find(params[:id])
-      produce.delete
+      produce_id.delete
       flash[:notice] = "You successfully deleted item from the database"
     else
       flash[:notice] = "You do not have permission to delete item from database"
