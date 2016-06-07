@@ -5,7 +5,12 @@ class ProduceDatabaseController < ApplicationController
   use Rack::Flash
 
   get '/produce_database/edit' do
-    erb :'/produce_database/edit'
+    if logged_in?
+      erb :'/produce_database/edit'
+    else
+      flash[:notice] = "Please log in"
+      redirect '/users/login'
+    end
   end
 
   patch '/produce_database/:id' do
@@ -53,6 +58,15 @@ class ProduceDatabaseController < ApplicationController
       end
     end
 
+  end
+
+  get '/produce_database/delete' do
+    if current_user.id == 6
+      erb :'/produce_database/delete'
+    else
+      flash[:notice] = "You do not have permission to see that page"
+      redirect '/users/user'
+    end
   end
 
 end

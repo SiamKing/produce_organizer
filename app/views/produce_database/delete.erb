@@ -1,0 +1,19 @@
+<table >
+  <tr>
+    <th > <h2>Item </h2> </th>
+    <th>          </th>
+  </tr>
+  <% ProduceDatabase.order(:name).all.each do |produce| %>
+
+  <form action="produce_database/<%= produce.id %>/delete" method="post">
+    <tr>
+      <input type="hidden" name="_method" value="delete">
+      <td width="150"><%= produce.name %> </td>
+      <td> <input type="submit" value="Delete from Database"> </td>
+    </tr>
+  </form>
+
+  <% end %>
+</table>
+<br></br>
+<a href="/users/user">Take me home</a>

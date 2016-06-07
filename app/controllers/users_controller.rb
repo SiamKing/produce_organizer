@@ -13,8 +13,11 @@ class UsersController < ApplicationController
   end
 
   post '/users/signup' do
-    if signup_blank
+    if signup_blank?
       flash[:notice] = "Please fill out all of the fields"
+      redirect '/users/signup'
+    elsif username_taken?
+      flash[:notice] = "Username taken. Please choose another name."
       redirect '/users/signup'
     else
       user = User.create(params)

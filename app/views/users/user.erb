@@ -37,3 +37,7 @@
 
 <br><br><br><br><br>
 <a href="/users/logout">Click here to logout</a>
+<br></br>
+<% if current_user.id == 6 %>
+<a href="/produce_database/delete">TJ only</a>
+<% end %>
