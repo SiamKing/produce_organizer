@@ -4,18 +4,8 @@ class User < ActiveRecord::Base
   has_many :produce_database
 
   has_secure_password
-
-  module InstanceMethods
-    def slug
-      username.downcase.gsub(" ", "-")
-    end
-  end
-
-
-  module ClassMethods
-    def find_by_slug(slug)
-      self.all.find{|instance| instance.slug == slug}
-    end
+  def self.blank?(params)
+      params[:username] == "" || params[:email] == "" || params[:password] == "" 
   end
 
 end

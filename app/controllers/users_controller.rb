@@ -2,7 +2,7 @@ require 'rack-flash'
 
 class UsersController < ApplicationController
 
-    use Rack::Flash
+  use Rack::Flash
 
   get '/users/signup' do
     if session[:user_id]
@@ -28,7 +28,7 @@ class UsersController < ApplicationController
   end
 
   get '/users/login' do
-    if session[:id]
+    if session[:user_id]
       redirect '/users/user'
     else
       erb :'/users/login'
@@ -49,6 +49,7 @@ class UsersController < ApplicationController
   get '/users/user' do
     if session[:user_id]
       @user = current_user
+      @user_produce = @user.produce
       erb :'/users/user'
     else
       flash[:notice] = "Please login"
@@ -66,14 +67,17 @@ class UsersController < ApplicationController
     end
   end
 
-  private
+  helpers do
 
-  def signup_blank?
-    params[:username] == "" || params[:email] == "" || params[:password] == ""
-  end
+    def signup_blank?
+      User.blank?(params)
+      # params[:username] == "" || params[:email] == "" || params[:password] == "" || params[:number]
+    end
 
-  def username_taken?
-    User.find_by(username: params[:username])
+    def username_taken?
+      User.find_by(username: params[:username])
+    end
+
   end
 
 end

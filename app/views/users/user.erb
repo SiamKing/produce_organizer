@@ -8,7 +8,7 @@
     <th>Expires in</th>
     <th>          </th>
   </tr>
-  <% @user.produce.each do |produce| %>
+  <% @user_produce.each do |produce| %>
   <tr>
     <td><%= produce.name %></td>
     <% if produce.expires_in > 0 %>

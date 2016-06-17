@@ -58,7 +58,7 @@ class ProduceController < ApplicationController
 
   def add_produce_to_list
     params[:produce][:name].each do |produce|
-      current_user.produce << Produce.create(name: ProduceDatabase.find_by(name: produce).name, shelf_life: ProduceDatabase.find_by(name: produce).shelf_life)
+      current_user.produce.create(name: ProduceDatabase.find_by(name: produce).name, shelf_life: ProduceDatabase.find_by(name: produce).shelf_life)
     end
   end
 
