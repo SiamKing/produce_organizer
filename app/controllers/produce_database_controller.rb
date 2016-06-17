@@ -16,24 +16,26 @@ class ProduceDatabaseController < ApplicationController
   patch '/produce_database/:id' do
     produce = produce_id #helper method
     if current_user.id == produce.user_id
-      if params[:name] != "" && params[:shelf_life] != ""
+      if params[:name] != "" && params[:shelf_life].to_i > 0
         produce.name = params[:name]
         produce.shelf_life = params[:shelf_life]
-        produce.save
       elsif params[:name] != ""
         produce.name = params[:name]
-        produce.save
-      elsif params[:shelf_life] != "" && params[:shelf_life]
+      elsif params[:shelf_life].to_i > 0
         produce.shelf_life = params[:shelf_life]
-        produce.save
       else
-        flash[:notice] = "Nothing was changed. Please Edit Below"
+        if params[:shelf_life] != ""
+          flash[:notice] = "Please enter a number greater than 0 for shelf life"
+        else
+          flash[:notice] = "Nothing was changed. Please Edit Below"
+        end
         redirect '/produce_database/edit'
       end
     else
       flash[:notice] = "Only the user that created the item can edit it."
       redirect '/users/user'
     end
+    produce.save
     flash[:notice] = "You successfully changed the item"
     redirect '/produce_database/edit'
   end
@@ -52,8 +54,8 @@ class ProduceDatabaseController < ApplicationController
         ProduceDatabase.create(name: params[:name].capitalize, shelf_life: params[:shelf_life], user_id: current_user.id)
         flash[:notice] = "Item was successfully added"
       end
-      redirect '/produce_database/new'
     end
+    redirect '/produce_database/new'
   end
 
   get '/produce_database/delete' do
@@ -73,6 +75,12 @@ class ProduceDatabaseController < ApplicationController
       flash[:notice] = "You do not have permission to delete item from database"
     end
     redirect '/users/user'
+  end
+
+  private
+
+  def produce_id
+    ProduceDatabase.find(params[:id])
   end
 
 end

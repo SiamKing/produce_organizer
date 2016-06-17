@@ -1,28 +1,14 @@
 # ProduceOrganizer
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/produce_organizer`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+One of the best things about living in California are the Farmer's Markets. One of the worst things is finding rotten produce in the back of your fridge. Enter Produce Organizer! Now you can organize your produce and never have to worry about spoilage. This app will let you know how many days each of your items have left before expiring!
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'produce_organizer'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install produce_organizer
+Download the repo at https://github.com/SiamKing/produce_organizer
 
 ## Usage
 
-TODO: Write usage instructions here
+Type 'shotgun' into your terminal and open your web browser of choice to localhost:9393. Here you can sign up and create your produce profile.
 
 ## Development
 
@@ -32,10 +18,9 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/produce_organizer. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/SiamKing/produce_organizer. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-

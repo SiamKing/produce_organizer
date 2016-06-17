@@ -13,10 +13,10 @@ class UsersController < ApplicationController
   end
 
   post '/users/signup' do
-    if signup_blank?
+    if signup_blank? #helper
       flash[:notice] = "Please fill out all of the fields"
       redirect '/users/signup'
-    elsif username_taken?
+    elsif username_taken? # helper
       flash[:notice] = "Username taken. Please choose another name."
       redirect '/users/signup'
     else
@@ -64,6 +64,16 @@ class UsersController < ApplicationController
     else
       redirect '/'
     end
+  end
+
+  private
+
+  def signup_blank?
+    params[:username] == "" || params[:email] == "" || params[:password] == ""
+  end
+
+  def username_taken?
+    User.find_by(username: params[:username])
   end
 
 end
